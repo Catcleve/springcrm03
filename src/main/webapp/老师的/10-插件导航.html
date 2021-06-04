@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--viewport：表示用户是否可以缩放页面
+        width：指定视区的逻辑宽度
+        device-width：指定视区宽度应为设备的屏幕宽度
+        initial-scale：指令用于设置web页面的初始缩略比例
+        initial-scale=1：将显示未经缩放的web文档-->
+
+    <title>Bootstrap的插件-导航</title>
+
+    <!--载入BootStrap的css-->
+    <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!--导入bootstrap的库文件-->
+    <!--<script src="js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!--导航-->
+    <p>标签式导航</p>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="http://www.baidu.com">Java</a></li>
+        <li><a href="http://www.baidu.com">HTML</a></li>
+        <li><a href="http://www.baidu.com">CSS</a></li>
+        <li><a href="http://www.baidu.com">JQuery</a></li>
+        <li><a href="http://www.baidu.com">PHP</a></li>
+        <li><a href="http://www.baidu.com">MySQL</a></li>
+        <li><a href="http://www.baidu.com">Python</a></li>
+    </ul>
+
+    <!--基本的胶囊式导航菜单-->
+    <p>基本的胶囊式导航菜单</p>
+    <ul class="nav nav-pills">
+        <li class="active"><a href="http://www.baidu.com">Java</a></li>
+        <li class="active"><a href="http://www.baidu.com">HTML</a></li>
+        <li class="active"><a href="http://www.baidu.com">CSS</a></li>
+        <li><a href="http://www.baidu.com">JQuery</a></li>
+        <li><a href="http://www.baidu.com">PHP</a></li>
+        <li><a href="http://www.baidu.com">MySQL</a></li>
+        <li><a href="http://www.baidu.com">Python</a></li>
+    </ul>
+
+    <p>分页导航</p>
+    <ul class="pagination">
+        <li class="active"><a href="http://www.baidu.com">1</a></li>
+        <li><a href="http://www.baidu.com">2</a></li>
+        <li class="active"><a href="http://www.baidu.com">3</a></li>
+        <li><a href="http://www.baidu.com">4</a></li>
+        <li><a href="http://www.baidu.com">5</a></li>
+        <li><a href="http://www.baidu.com">6</a></li>
+        <li><a href="http://www.baidu.com">7</a></li>
+    </ul>
+
+    <p>翻页导航</p>
+    <ul class="pager">
+        <li class="active"><a href="http://www.baidu.com">1</a></li>
+        <li><a href="http://www.baidu.com">2</a></li>
+        <li class="active"><a href="http://www.baidu.com">3</a></li>
+        <li><a href="http://www.baidu.com">4</a></li>
+        <li><a href="http://www.baidu.com">5</a></li>
+        <li><a href="http://www.baidu.com">6</a></li>
+        <li><a href="http://www.baidu.com">7</a></li>
+    </ul>
+
+    <p>面包屑导航</p>
+    <ul class="breadcrumb">
+        <li class="active"><a href="http://www.baidu.com">1</a></li>
+        <li><a href="http://www.baidu.com">2</a></li>
+        <li class="active"><a href="http://www.baidu.com">3</a></li>
+        <li><a href="http://www.baidu.com">4</a></li>
+        <li><a href="http://www.baidu.com">5</a></li>
+        <li><a href="http://www.baidu.com">6</a></li>
+        <li><a href="http://www.baidu.com">7</a></li>
+    </ul>
+
+    <hr/>
+
+    <!--下拉菜单-->
+    <div class="dropdown">
+        <!--按钮-->
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+           喜欢的节目
+            <span class="caret"></span>
+        </button>
+        <!--下拉菜单-->
+        <ul class="dropdown-menu">
+            <li class="dropdown-header">===综艺===</li>
+            <li><a href="http://www.baidu.com">王牌对王牌</a></li>
+            <li><a href="http://www.baidu.com">快乐大本营</a></li>
+            <li><a href="http://www.baidu.com">天天向上</a></li>
+            <li><a href="http://www.baidu.com">乘风破浪的姐姐</a></li>
+
+            <li class="dropdown-header">===电影===</li>
+            <li><a href="http://www.baidu.com">你好，李焕英</a></li>
+            <li><a href="http://www.baidu.com">刺杀小说家</a></li>
+            <li><a href="http://www.baidu.com">唐探3</a></li>
+            <li><a href="http://www.baidu.com">侍神令</a></li>
+        </ul>
+    </div>
+
+    <!---->
+
+</body>
+</html>
+
+

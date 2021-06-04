@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace需要与接口权限定类名一致-->
+    <mapper namespace="com.Hwang.mapper.EmployeeMapper">
+
+    <select id="findEmployee" resultType="employee">
+        select e.id,
+               e.lastName,
+               e.email,
+               e.gender,
+               d.departmentName deptName
+        from employee e
+        left join depart d on e.deptName = d.departmentId
+    </select>
+
+    <select id="findEmployeeById" resultType="employee">
+        select id, lastName, email, gender, deptName from employee where id = #{id}
+    </select>
+
+    <update id="updateEmployeeById">
+        update employee
+        set id = #{id},
+            lastName = #{lastName},
+            email = #{email},
+            gender = #{gender},
+            deptName = #{deptName}
+        where id = #{id};
+    </update>
+
+    <insert id="add">
+        insert into employee ( lastName, email, gender, deptName)
+        VALUES (#{lastName},#{email},#{gender},#{deptName})
+    </insert>
+
+    <delete id="deleteAll">
+        <if test="list != null and list.size > 0">
+            delete from employee where id in
+                <foreach collection="list" open="(" close=")" item="eid" separator=",">
+                    #{eid}
+                </foreach>
+        </if>
+    </delete>
+
+    <delete id="delete">
+        delete from employee where id = #{id}
+    </delete>
+
+</mapper>

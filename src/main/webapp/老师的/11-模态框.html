@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--viewport：表示用户是否可以缩放页面
+        width：指定视区的逻辑宽度
+        device-width：指定视区宽度应为设备的屏幕宽度
+        initial-scale：指令用于设置web页面的初始缩略比例
+        initial-scale=1：将显示未经缩放的web文档-->
+
+    <title>Bootstrap的模态框</title>
+
+    <!--载入BootStrap的css-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!--导入bootstrap的库文件-->
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+    <!--模态框-->
+    <button class="btn btn-success" data-toggle="modal" data-target="#myModal">打开模态框</button>
+    <button class="btn btn-warning" id="openBtn">打开模态框</button>
+
+    <!--模态框-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title" id="myModalLabel">模态框标题</h4>
+                </div>
+
+                <div class="modal-body">在这里可以写一些文本数据</div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" id="closeBtn">关闭模态框</button>
+                    <button class="btn btn-warning" >关闭</button>
+                    <button class="btn btn-success" >提交</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+
+        $("#openBtn").click(function () {
+
+            $("#myModal").modal("show");
+        });
+        $("#closeBtn").click(function () {
+
+            $("#myModal").modal("hide");
+        });
+    </script>
+
+</body>
+</html>
+
+

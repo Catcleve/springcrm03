@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--viewport：表示用户是否可以缩放页面
+        width：指定视区的逻辑宽度
+        device-width：指定视区宽度应为设备的屏幕宽度
+        initial-scale：指令用于设置web页面的初始缩略比例
+        initial-scale=1：将显示未经缩放的web文档-->
+
+    <title>Bootstrap的基本模板</title>
+
+    <!--载入BootStrap的css-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!--导入bootstrap的库文件-->
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!--1、栅格网络系统：12个栅格网络-->
+    <!--1.1 4和8-->
+    <div class="container">
+
+        <!--列组合-->
+        <div class="row">
+            <div class="col-md-4" style="background-color: pink">4列</div>
+            <div class="col-md-8" style="background-color: skyblue">8列</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" style="background-color: darkcyan">6列</div>
+            <div class="col-md-6" style="background-color: deeppink">6列</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" style="background-color: yellow">6列</div>
+            <div class="col-md-10" style="background-color: greenyellow">10列</div>
+        </div>
+
+        <!--列偏移-->
+        <div class="row">
+            <div class="col-md-2" style="background-color: burlywood">2</div>
+            <div class="col-md-3 col-md-offset-1" style="background-color: skyblue">3</div>
+            <div class="col-md-3" style="background-color: blueviolet">3</div>
+        </div>
+
+        <!--列排序-->
+        <div class="row">
+            <div class="col-md-2" style="background-color: wheat">2</div>
+            <div class="col-md-2 col-md-pull-1" style="background-color: red">2</div>
+            <div class="col-md-2 col-md-push-1" style="background-color: cornflowerblue">2</div>
+            <div class="col-md-2" style="background-color: greenyellow">2</div>
+        </div>
+
+        <!--列嵌套-->
+        <div class="row">
+            <div class="col-md-8" style="background-color: lightpink">
+                <div class="col-md-4" style="background-color: burlywood">4</div>
+                <div class="col-md-4" style="background-color: skyblue">4</div>
+                <div class="col-md-4" style="background-color: blueviolet">4</div>
+
+            </div>
+            <div class="col-md-4" style="background-color: yellow">4</div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+

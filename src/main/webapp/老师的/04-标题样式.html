@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--viewport：表示用户是否可以缩放页面
+        width：指定视区的逻辑宽度
+        device-width：指定视区宽度应为设备的屏幕宽度
+        initial-scale：指令用于设置web页面的初始缩略比例
+        initial-scale=1：将显示未经缩放的web文档-->
+
+    <title>Bootstrap的常用样式—标题</title>
+
+    <!--载入BootStrap的css-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!--导入bootstrap的库文件-->
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!--标题-->
+<!--    <h1>习近平与少年儿童的故事
+        <small>今天是六一儿童节</small>
+    </h1>-->
+
+    <div class="h1">习近平与少年儿童的故事<span class="small">今天是六一儿童节</span></div>
+    <hr/>
+    <!--段落-->
+    <p>总书记还向小队员们讲起自己年少时在什刹海滑冰的往事，对当时家里给买的冰鞋记忆犹新。
+        总书记说，你们现在条件太好了，不仅有很好的学习环境，还有这么好的锻炼条件，既增强体质，也培养勇敢合作精神。</p>
+
+    <!--lead：用来突出强调内容的，作用激素hi增大文本字号，加粗文本，而且对行高和margin也做了简单处理-->
+    <p class="lead">总书记还向小队员们讲起自己年少时在什刹海滑冰的往事，对当时家里给买的冰鞋记忆犹新。
+        总书记说，你们现在条件太好了，不仅有很好的学习环境，还有这么好的锻炼条件，既增强体质，也培养勇敢合作精神。</p>
+
+    <p class="lead">
+        <small>哈哈哈哈哈</small>
+        <b>我</b><i>爱</i>你<em>中国</em><strong>母亲</strong>
+    </p>
+
+    <hr/>
+    <!--强调-->
+    <div class="text-muted">提示效果</div><!--浅灰色-->
+    <div class="text-primary">主要效果</div><!--蓝色-->
+    <div class="text-success">成功效果</div><!--绿色-->
+    <div class="text-info">信息效果</div><!--浅蓝色-->
+    <div class="text-warning">警告效果</div><!--黄色-->
+    <div class="text-danger">危险效果</div><!--红色-->
+    <hr/>
+    <!--对齐效果-->
+    <p class="text-left">我是左对齐</p>
+    <p class="text-center">我是居中对齐</p>
+    <p class="text-right">我是右对齐</p>
+    <p class="text-justify">我是两端对齐：感受到社会主义大家庭的温暖。</p>
+    <hr/>
+    <!--列表-->
+    <!--无序列表-->
+    <ul>
+        <li>无序列表1</li>
+        <li>无序列表2</li>
+    </ul>
+    <hr/>
+    <ul class="list-unstyled"><!--去点操作-->
+        <li>无序列表1</li>
+        <li>无序列表2</li>
+    </ul>
+    <hr/>
+    <ul class="list-inline"><!--在一行显示-->
+        <li>无序列表1</li>
+        <li>无序列表2</li>
+    </ul>
+    <!--有序列表-->
+    <ol>
+        <li>有序列表1</li>
+        <li>有序列表2</li>
+    </ol>
+    <hr/>
+    <!--定义列表-->
+    <dl>
+        <dt>HTML</dt>
+        <dd>超文本标记语言</dd>
+        <dt>CSS</dt>
+        <dd>层叠样式语言</dd>
+    </dl>
+    <hr/>
+    <dl class="dl-horizontal"><!--制作水平定义列表-->
+        <dt>HTML</dt>
+        <dd>超文本标记语言</dd>
+        <dt>CSS</dt>
+        <dd>层叠样式语言</dd>
+    </dl>
+    <hr/>
+
+    <!--代码-->
+    <!--单行内联代码-->
+    <code>
+        这是单行内联代码
+        这是单行内联代码
+    </code>
+
+    <!--快捷键-->
+    <p>使用<kbd>Ctrl</kbd>+<kbd>S</kbd>保存</p>
+
+    <!--多行块-->
+    <pre class="pre-scrollable"><!--添加滚动条的效果-->
+        package com.bjpowernode.controller;
+
+        import com.bjpowernode.pojo.BaseDict;
+        import com.bjpowernode.pojo.Customer;
+        import com.bjpowernode.pojo.QueryVo;
+        import com.bjpowernode.service.BaseDictService;
+        import com.bjpowernode.service.CustomerService;
+        import com.bjpowernode.utils.Page;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.beans.factory.annotation.Value;
+        import org.springframework.stereotype.Controller;
+        import org.springframework.ui.Model;
+        import org.springframework.web.bind.annotation.RequestMapping;
+        import org.springframework.web.bind.annotation.ResponseBody;
+
+        import java.util.List;
+
+        @Controller
+        @RequestMapping("customer")
+        public class CustomerController {
+
+            /*注入Service层对象*/
+            @Autowired
+            private BaseDictService baseDictService;
+
+            @Autowired
+            private CustomerService customerService;
+
+            @Value("${customer_from_type}")
+            private String customer_from_type;
+            @Value("${customer_industry_type}")
+            private String customer_industry_type;
+            @Value("${customer_level_type}")
+            private String customer_level_type;
+
+            /**
+             * 显示客户的列表页面
+             */
+            @RequestMapping("list")
+            public String list(Model model, QueryVo vo){
+
+                //查询客户来源
+                List<BaseDict> formType = baseDictService.getBaseDictByCode(customer_from_type);
+
+                //查询客户所属行业
+                List<BaseDict> industryType = baseDictService.getBaseDictByCode(customer_industry_type);
+
+                //查询客户级别
+                List<BaseDict> levelType = baseDictService.getBaseDictByCode(customer_level_type);
+
+                //使用model处理数据
+                model.addAttribute("fromType",formType);
+                model.addAttribute("industryType",industryType);
+                model.addAttribute("levelType",levelType);
+
+                //根据查询条件分页查询客户信息
+                Page<Customer> page = customerService.getCustomerByQueryVo(vo);
+
+                //设置分页的返回
+                model.addAttribute("page",page);
+
+                //返回查询条件
+                model.addAttribute("vo",vo);
+                return "customer";
+            }
+
+            /**
+             * 修改用户信息：先查询该用户信息
+             */
+            @RequestMapping("edit")
+            @ResponseBody
+            public Customer edit(Integer id){
+                Customer customer = customerService.getCustomerById(id);
+                System.out.println(customer);
+                return customer;
+            }
+
+            /**
+             * 真正修改客户的信息方法
+             */
+            @RequestMapping("update")
+            @ResponseBody
+            public String update(Customer customer){
+
+                customerService.updateCustomer(customer);
+                return "list.action";
+            }
+
+
+            /**
+             * 删除的方法
+             */
+            @RequestMapping("delete")
+            @ResponseBody
+            public String delete(Integer id){
+
+                String msg = "1";
+
+                try {
+                    customerService.deleteCustomerById(id);
+                    msg = "0";
+                    System.out.println(id);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                return msg;
+            }
+
+        }
+    </pre>
+</body>
+</html>
+
+
