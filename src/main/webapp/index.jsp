@@ -136,6 +136,8 @@
 
     <script type="text/javascript">
 
+<%--        定义全局变量，给编辑和添加使用--%>
+
         $(function (){
 
             goPage(1)
