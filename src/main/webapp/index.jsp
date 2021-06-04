@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<%--模态框--%>
+<%--添加模态框--%>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" >
             <div class="modal-content">
@@ -71,7 +71,6 @@
                             <label for="dept_name" class="col-sm-2 control-label">部门</label>
                             <div class="col-sm-9">
                                 <select class="form-control" id="dept_name" name="deptName">
-                                    <option selected >请选择</option>
                                 </select>
                             </div>
                             <div class="col-lg-1"></div>
@@ -130,14 +129,13 @@
                     </nav>
                 </div>
             </div>
-
         </div>
     </form>
 
     <script type="text/javascript">
 
 <%--        定义全局变量，给编辑和添加使用--%>
-
+        var page_num, page_size,dept_name
         $(function (){
 
             goPage(1)
@@ -158,6 +156,8 @@
                     build_page_info(empVo);
                     //解析分页导航信息
                     build_page_nav(empVo);
+                    //解析部门信息
+                    build_dept_name(empVo);
                 }
             })
         }
@@ -199,6 +199,9 @@
             let pageInfo = empVo.pageInfo;
             $('#page_info').empty().append("当前第"+ pageInfo.pageNum+
                 "页，总共"+pageInfo.pages+"页，一共"+pageInfo.total+"条记录")
+
+            page_num = pageInfo.pageNum
+            page_size = pageInfo.pages
 
         }
 
@@ -255,39 +258,55 @@
             $page_nav.append(nextPage).append(lastPage)
         }
 
-        //点击添加按钮返回部门列表
-        $("#add_btn").click(function (){
-
+        function build_dept_name(empVo){
             let $dept_name = $('#dept_name')
-            $.ajax({
-                url: "<%=basePath%>getDeparts.do",
-                type: "post",
-                success:function (data) {
-                    let departs = data.departs;
-                    console.log(data)
-                    $.each(departs,function (index,item) {
-                        $("<option></option>").val(item.departmentId)
-                            .html(item.departmentName).appendTo($dept_name)
-                    })
-                }
+            let departs = empVo.departs;
+            console.log(empVo)
+            $.each(departs,function (index,item) {
+                $("<option></option>").val(item.departmentId)
+                    .html(item.departmentName).appendTo($dept_name)
             })
+        }
+
+        //点击添加按钮，从数据库获取部门列表
+        <%--$("#add_btn").click(function (){--%>
+        <%--    let $dept_name = $('#dept_name')--%>
+        <%--    $.ajax({--%>
+        <%--        url: "<%=basePath%>getDeparts.do",--%>
+        <%--        type: "post",--%>
+        <%--        success:function (data) {--%>
+        <%--            let departs = data.departs;--%>
+        <%--            console.log(data)--%>
+        <%--            $.each(departs,function (index,item) {--%>
+        <%--                $("<option></option>").val(item.departmentId)--%>
+        <%--                    .html(item.departmentName).appendTo($dept_name)--%>
+        <%--            })--%>
+        <%--        }--%>
+        <%--    })--%>
+        <%--})--%>
+
+
+        //点击模态框提交按钮，获取模态框内容，启动添加方法
+        $('#add_sub').click(function () {
+            add()
         })
 
-        //获取模态框内容，启动添加方法
-        $('#add_sub').click(function () {
-        //  使用ajax的方法提交表单
+        //添加的方法
+        function add() {
             $.ajax({
                 type:'post',
                 url:'<%=basePath%>add.do',
                 data: $('#addForm').serialize(),
                 success:function () {
-
-                    goPage()
+                    goPage(page_size)
+                    $('#myModal').modal('hide')
+                    alert("操作成功")
                 }
             })
+        }
 
-        })
 
+        //编辑的方法
 
 
 

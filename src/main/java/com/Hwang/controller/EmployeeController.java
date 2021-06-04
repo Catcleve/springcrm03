@@ -39,13 +39,15 @@ public class EmployeeController {
 //    配合ajax主方法
     @RequestMapping("findAll")
     @ResponseBody
-    public EmpVo findAll (@RequestParam(defaultValue = "1") Integer page){
+    public EmpVo<Depart> findAll (@RequestParam(defaultValue = "1") Integer page){
 
         System.out.println("page = " + page);
         PageHelper.startPage(page,5);
         List<Employee> list = employeeService.findEmployee(page);
         PageInfo<Employee> pageInfo = new PageInfo<>(list,5);
-        EmpVo empVo = new EmpVo();
+        List<Depart> dept = departService.getDept();
+        EmpVo<Depart> empVo = new EmpVo<>();
+        empVo.setDeparts(dept);
         empVo.setPageInfo(pageInfo);
         return empVo;
     }
@@ -60,9 +62,6 @@ public class EmployeeController {
         empVo.setDeparts(dept);
         return empVo;
     }
-
-
-
 
 
 
