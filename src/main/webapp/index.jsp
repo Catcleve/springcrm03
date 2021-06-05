@@ -278,24 +278,6 @@
             })
         }
 
-        //点击添加按钮，从数据库获取部门列表
-        <%--$("#add_btn").click(function (){--%>
-        <%--    let $dept_name = $('#dept_name')--%>
-        <%--    $.ajax({--%>
-        <%--        url: "<%=basePath%>getDeparts.do",--%>
-        <%--        type: "post",--%>
-        <%--        success:function (data) {--%>
-        <%--            let departs = data.departs;--%>
-        <%--            console.log(data)--%>
-        <%--            $.each(departs,function (index,item) {--%>
-        <%--                $("<option></option>").val(item.departmentId)--%>
-        <%--                    .html(item.departmentName).appendTo($dept_name)--%>
-        <%--            })--%>
-        <%--        }--%>
-        <%--    })--%>
-        <%--})--%>
-
-
 
         //点击添加按钮，清空模态框内容，
         $('#add_btn').click(function (){
@@ -344,19 +326,23 @@
                 },
                 //    请求获取员工信息 然后回显信息
                 success:function (emp){
+                    //把数据放进模态框中
                     $("#edit_id_show p").text(emp.id);
                     $("#emp_id").val(emp.id)
                     $("#lastname").val(emp.lastName);
                     $("#email").val(emp.email);
+                    //获取性别的单选框，遍历，选中员工性别
                     $.each($("input[name = 'gender']"),function (index,item) {
                         console.log($(item).val())
                         console.log(emp.gender)
                         if ($(item).val() === emp.gender) {
+                            //这里要用prop
                             $(item).prop("checked",true)
                         }else {
                             $(item).removeAttr("checked","checked")
                         }
                     })
+                    //获取部门下拉框，遍历选中员工部门
                     $.each($("option"),function (index,item) {
                         if ($(item).val() === emp.deptName) {
                             $(item).prop("selected",true)
@@ -374,8 +360,6 @@
             $("#addForm option").prop("selected",false)
             $("#addForm p").text(null)
         }
-
-
 
 
         $('#form').submit(function (){
