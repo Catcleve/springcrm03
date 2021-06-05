@@ -50,4 +50,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void delete(Employee employee) {
 
     }
+
+    @Override
+    public Employee findEmpById(Employee employee) {
+        return employeeMapper.findEmployeeById(employee);
+    }
 }

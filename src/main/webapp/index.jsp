@@ -34,6 +34,16 @@
                 <div class="modal-body" >
                     <form class="form-horizontal" role="form" id="addForm" action="<%=basePath%>add.do">
 
+                        <%--          id框 添加的时候隐藏，编辑的时候显现--%>
+                        <div class="form-group" id="edit_id_show" style="display: none">
+                            <label  class="col-lg-2 control-label">ID</label>
+                            <div class="col-lg-9">
+                                <p class="form-control-static" ></p>
+                                <input type="hidden" name="id" id="emp_id" >
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+
                         <%--          名字组--%>
                         <div class="form-group">
                             <label for="lastname" class="col-lg-2 control-label">名字</label>
@@ -135,7 +145,7 @@
     <script type="text/javascript">
 
 <%--        定义全局变量，给编辑和添加使用--%>
-        var page_num, page_size,dept_name
+        var page_num, page_size,dept_name,url_emp
         $(function (){
 
             goPage(1)
@@ -286,6 +296,15 @@
         <%--})--%>
 
 
+
+        //点击添加按钮，清空模态框内容，
+        $('#add_btn').click(function (){
+            restart()
+            url_emp = "<%=basePath%>add.do"
+            $("addForm").attr("action","<%=basePath%>add.do")
+            $('#edit_id_show').attr("style","display: none").val()
+        })
+
         //点击模态框提交按钮，获取模态框内容，启动添加方法
         $('#add_sub').click(function () {
             add()
@@ -295,18 +314,66 @@
         function add() {
             $.ajax({
                 type:'post',
-                url:'<%=basePath%>add.do',
+                url:url_emp,
                 data: $('#addForm').serialize(),
-                success:function () {
+                success:function (data) {
+                    $("#dept_name").empty()
                     goPage(page_size)
                     $('#myModal').modal('hide')
-                    alert("操作成功")
+                    alert(data)
                 }
             })
         }
 
 
-        //编辑的方法
+        //编辑的模态框回显
+        $(document).on("click","[edit-id]",function () {
+            var $edit_id = $(this).attr("edit-id")
+            url_emp = "<%=basePath%>edit.do"
+        //    显示id框
+            $('#edit_id_show').attr("style","")
+            //更改表单提交地址
+            $("addForm").attr("action","<%=basePath%>edit.do")
+            $('#myModal').modal('show')
+        //    先获得员工信息
+            $.ajax({
+                url:"<%=basePath%>update.do",
+                type:"post",
+                data:{
+                    id:$edit_id
+                },
+                //    请求获取员工信息 然后回显信息
+                success:function (emp){
+                    $("#edit_id_show p").text(emp.id);
+                    $("#emp_id").val(emp.id)
+                    $("#lastname").val(emp.lastName);
+                    $("#email").val(emp.email);
+                    $.each($("input[name = 'gender']"),function (index,item) {
+                        console.log($(item).val())
+                        console.log(emp.gender)
+                        if ($(item).val() === emp.gender) {
+                            $(item).prop("checked",true)
+                        }else {
+                            $(item).removeAttr("checked","checked")
+                        }
+                    })
+                    $.each($("option"),function (index,item) {
+                        if ($(item).val() === emp.deptName) {
+                            $(item).prop("selected",true)
+                        }
+                    })
+                }
+            })
+        })
+
+        
+        //清空模态框方法
+        function restart() {
+            $("#addForm input:not([name = 'gender'])").val("")
+            $("#addForm input[name = 'gender']").prop("checked",false)
+            $("#addForm option").prop("selected",false)
+            $("#addForm p").text(null)
+        }
 
 
 

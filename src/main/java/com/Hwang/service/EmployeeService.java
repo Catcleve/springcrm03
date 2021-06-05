@@ -20,4 +20,8 @@ public interface EmployeeService {
 
     //    通过id删除员工
     void delete(Employee employee);
+
+    //   通过id查询员工
+    Employee findEmpById(Employee employee);
+
 }

@@ -23,14 +23,25 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
     @Autowired
     private DepartService departService;
 
-//    显示所有
 
-    @RequestMapping ("goFirst")
-    public String goFirst(){
-       return "main";
+//  根据id查找到员工
+    @RequestMapping ("update")
+    @ResponseBody
+    public Employee update(Employee employee){
+
+        return employeeService.findEmpById(employee);
+    }
+
+//    修改员工
+    @RequestMapping("edit")
+    @ResponseBody
+    private String edit(Employee employee){
+        System.out.println("employee修改 = " + employee);
+        return "haha";
     }
 
 
@@ -85,8 +96,9 @@ public class EmployeeController {
 
 //    添加员工
     @RequestMapping("add")
+    @ResponseBody
     public String addEmp (Employee employee){
-        System.out.println("employee = " + employee);
-        return "redirect:goFirst.do";
+        System.out.println("employee添加 = " + employee);
+        return "添加成功";
     }
 }
