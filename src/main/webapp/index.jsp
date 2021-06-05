@@ -145,6 +145,7 @@
     <script type="text/javascript">
 
 <%--        定义全局变量，给编辑和添加使用--%>
+<%--     page_num当前页   page_size总页数  dept_name部门名称集合  url_emp提交和 --%>
         var page_num, page_size,dept_name,url_emp
         $(function (){
 
@@ -268,6 +269,8 @@
             $page_nav.append(nextPage).append(lastPage)
         }
 
+
+        //给部门下拉框赋值的方法
         function build_dept_name(empVo){
             let $dept_name = $('#dept_name')
             let departs = empVo.departs;
@@ -281,9 +284,11 @@
 
         //点击添加按钮，清空模态框内容，
         $('#add_btn').click(function (){
+            // 清空内容
             restart()
+            //  因为是添加，所以把ajax请求地址改为添加
             url_emp = "<%=basePath%>add.do"
-            $("addForm").attr("action","<%=basePath%>add.do")
+            //隐藏id框，清空id值
             $('#edit_id_show').attr("style","display: none").val()
         })
 
@@ -355,9 +360,13 @@
         
         //清空模态框方法
         function restart() {
+            //清空除了性别框的内容
             $("#addForm input:not([name = 'gender'])").val("")
+            //取消性别框选中
             $("#addForm input[name = 'gender']").prop("checked",false)
+            //取消部门选中
             $("#addForm option").prop("selected",false)
+            //清空id显示的值
             $("#addForm p").text(null)
         }
 
@@ -371,7 +380,6 @@
             })
             return tt;
         })
-
     </script>
 </body>
 </html>
