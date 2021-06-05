@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<%--添加模态框--%>
+<%--添加和编辑模态框--%>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" >
             <div class="modal-content">
@@ -33,7 +33,6 @@
                 </div>
                 <div class="modal-body" >
                     <form class="form-horizontal" role="form" id="addForm" action="<%=basePath%>add.do">
-
                         <%--          id框 添加的时候隐藏，编辑的时候显现--%>
                         <div class="form-group" id="edit_id_show" style="display: none">
                             <label  class="col-lg-2 control-label">ID</label>
@@ -114,7 +113,7 @@
                     </tr>
 
                     <tr>
-                        <th><input type="checkbox"></th>
+                        <th><input type="checkbox" name="ids_all" id="ids_all"></th>
                         <th>#</th>
                         <th>lastName</th>
                         <th>email</th>
@@ -154,6 +153,8 @@
         })
 
         function goPage(pn) {
+            //goPage方法会回显下拉框，所以要先清空一次，要不然会出现很多个下拉框
+            $("#dept_name").empty()
             $.ajax({
                 url:"<%=basePath%>findAll.do",
                 type:"get",
@@ -297,7 +298,7 @@
             add()
         })
 
-        //添加的方法
+        //提交表单的方法，添加和编辑公用
         function add() {
             $.ajax({
                 type:'post',
@@ -371,11 +372,24 @@
         }
 
 
+        //全选的实现，当点击全选时
+        $("#ids_all").click(function () {
+            //选择器选中所有的多选框，设置属性checked为 上面全选框全选的checked属性
+            $("input[name = 'ids']").prop("checked",$(this).prop("checked"))
+        })
+
+
+        /*点击删除按钮的时候要判断是否有选中的，如果没有选中的则不提交
+        如果有选中的，则显示二次确认，同时显示姓名，确认删除执行ajax请求
+*/
+
+
+        //删除按钮点击的时候判断是否有按钮选中，如果一个都没有，则无法点击
         $('#form').submit(function (){
-            var tt = false
+            var tt = true
             $.each($("input[name = 'ids']"),function (i,idss){
-                if ($(idss).is(':checked')) {
-                    tt = true
+                if (!$(idss).is(':checked')) {
+                    tt = false
                 }
             })
             return tt;

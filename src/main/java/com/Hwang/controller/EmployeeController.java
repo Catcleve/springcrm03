@@ -77,7 +77,7 @@ public class EmployeeController {
 
 
 //    批量删除
-    @RequestMapping("deleteAll")
+/*    @RequestMapping("deleteAll")
     private ModelAndView deleteAll( Integer[] ids) {
 
         ModelAndView mad = new ModelAndView();
@@ -91,6 +91,19 @@ public class EmployeeController {
         mad.setViewName("redirect:findAll.do");
 
         return mad;
+    }*/
+
+    //    批量删除
+    @RequestMapping("deleteAll")
+    @ResponseBody
+    private String deleteAll( Integer[] ids) {
+
+        for (Integer id : ids) {
+            System.out.println("id = " + id);
+        }
+
+
+        return "成功";
     }
 
 
