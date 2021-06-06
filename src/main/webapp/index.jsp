@@ -219,11 +219,11 @@
 
         //解析分页导航信息
         function build_page_nav(empVo) {
-            var $page_nav = $("#page_nav")
+            const $page_nav = $("#page_nav");
             $page_nav.empty()
             let pageInfo = empVo.pageInfo;
-            var firstPage = $("<li></li>").append($("<a></a>").attr("href","#").append("首页"))
-            var prePage = $("<li></li>").append($("<a></a>").attr("href","#").append($("<span></span>").attr("aria-hidden","true").append("&laquo;")))
+            const firstPage = $("<li></li>").append($("<a></a>").attr("href", "#").append("首页"));
+            const prePage = $("<li></li>").append($("<a></a>").attr("href", "#").append($("<span></span>").attr("aria-hidden", "true").append("&laquo;")));
             if (pageInfo.isFirstPage) {
                 //如果是第一页，就禁用按钮
                 firstPage.addClass("disabled")
@@ -274,6 +274,8 @@
         //给部门下拉框赋值的方法
         function build_dept_name(empVo){
             let $dept_name = $('#dept_name')
+
+            //const {departs} = empVo;这一行作用等同于下面一行代码，是json对象的用法
             let departs = empVo.departs;
             console.log(empVo)
             $.each(departs,function (index,item) {
@@ -380,15 +382,14 @@
 
 
         /*点击删除按钮的时候要判断是否有选中的，如果没有选中的则不提交
-        如果有选中的，则显示二次确认，同时显示姓名，确认删除执行ajax请求
-*/
+        如果有选中的，则显示二次确认，同时显示姓名，确认删除执行ajax请求*/
 
 
         //删除按钮点击的时候判断是否有按钮选中，如果一个都没有，则无法点击
         $('#form').submit(function (){
             var tt = true
             $.each($("input[name = 'ids']"),function (i,idss){
-                if (!$(idss).is(':checked')) {
+                if ($(idss).is(':checked')) {
                     tt = false
                 }
             })
