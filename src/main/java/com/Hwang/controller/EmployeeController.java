@@ -32,6 +32,7 @@ public class EmployeeController {
     @ResponseBody
     public Employee update(Employee employee){
 
+
         return employeeService.findEmpById(employee);
     }
 
@@ -100,7 +101,6 @@ public class EmployeeController {
         for (Integer id : ids) {
             System.out.println("id = " + id);
         }
-
 
         return "成功";
     }
