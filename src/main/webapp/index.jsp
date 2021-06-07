@@ -147,7 +147,6 @@
 <%--     page_num当前页   page_size总页数  dept_name部门名称集合  url_emp提交和 --%>
         var page_num, page_size,dept_name,url_emp
         $(function (){
-
             goPage(1)
 
         })
