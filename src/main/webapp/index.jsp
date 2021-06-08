@@ -97,10 +97,7 @@
 
 <%--    主表格--%>
 <div class="container glyphicon-sort-by-attributes ">
-    <h1 id="">SSM-CRUD</h1>
-
-    <br>
-
+    <h1 id="">SSM-CRUD</h1><br>
     <table class="table table-striped table-bordered table-hover " style=" text-align: center ; font-size: 22px">
         <thead>
         <tr>
@@ -147,6 +144,8 @@
     <%--        定义全局变量，给编辑和添加使用--%>
     <%--     page_num当前页   page_size总页数  dept_name部门名称集合  url_emp编辑和新增要提交的地址 --%>
     let page_num, page_size, dept_name, url_emp, page_change;
+    //全选按钮
+    const checkAll = $("#ids_all");
     $(function () {
         goPage(1)
 
@@ -155,6 +154,8 @@
     function goPage(pn) {
         //goPage方法会回显下拉框，所以要先清空一次，要不然会出现很多个下拉框
         $("#dept_name").empty()
+        //复位全选按钮
+        checkAll.prop("checked", false)
         $.ajax({
             url: "<%=basePath%>findAll.do",
             type: "get",
@@ -390,12 +391,12 @@
         //取消部门选中
         $("#addForm option").prop("selected", false)
         //清空id显示的值
-            $("#addForm p").text(null)
-        }
+        $("#addForm p").text(null)
+    }
 
 
     //全选的实现，当点击全选时,所有的多选按钮选中状态同步全选按钮
-    $("#ids_all").click(function () {
+    checkAll.click(function () {
         //选择器选中所有的多选框，设置属性checked为 上面全选框全选的checked属性
         $("input[name = 'ids']").prop("checked", $(this).prop("checked"))
     })
@@ -425,9 +426,10 @@
                     success: function (data) {
                         console.log("删除删除")
                         console.log(data)
-                        $("#ids_all").prop("checked", false)
+                        checkAll.prop("checked", false)
                         //批量删除后情况表单
                         $("#form").empty()
+                        goPage(page_num)
                     }
                 })
             }
@@ -436,7 +438,7 @@
             return false
         }
         //返回当前页
-        goPage(page_num)
+
     })
 
     // 删除单个
