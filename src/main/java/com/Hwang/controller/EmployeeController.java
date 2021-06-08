@@ -106,12 +106,22 @@ public class EmployeeController {
     }
 
 
-//    添加员工
+    //    添加员工
     @RequestMapping("add")
     @ResponseBody
-    public String addEmp (Employee employee){
+    public String addEmp(Employee employee) {
         System.out.println("employee添加 = " + employee);
         return "添加成功";
 
+    }
+
+    //    删除单个员工
+    @RequestMapping("deleteOne")
+    @ResponseBody
+    public String deleteOne(Integer id) {
+
+        System.out.println("单个删除 = " + id);
+
+        return "删除一个";
     }
 }

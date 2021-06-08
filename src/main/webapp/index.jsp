@@ -98,17 +98,22 @@
 <%--    主表格--%>
 <div class="container glyphicon-sort-by-attributes ">
     <h1 id="">SSM-CRUD</h1>
-    <div class="row">
-        <div class="col-md-10"></div>
-        <div class="col-md-2">
-            <button id="deletes" class="btn btn-danger">删除</button>
-            <button class="btn btn-primary" id="add_btn">添加</button>
-        </div>
-    </div>
+
     <br>
 
-    <table class="table table-striped table-bordered table-hover " style="font-size: 22px">
+    <table class="table table-striped table-bordered table-hover " style=" text-align: center ; font-size: 22px">
         <thead>
+        <tr>
+            <th colspan="7">
+                <div class="row">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-2">
+                        <button id="deletes" class="btn btn-danger">删除</button>
+                        <button class="btn btn-primary" id="add_btn">添加</button>
+                    </div>
+                </div>
+            </th>
+        </tr>
         <tr>
             <th><input type="checkbox" name="ids_all" id="ids_all"></th>
             <th>#</th>
@@ -116,12 +121,13 @@
             <th>email</th>
             <th>gender</th>
             <th>deptName</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody id="emp_table">
-                </tbody>
-            </table>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="emp_table">
+        </tbody>
+    </table>
+
     <div class="row">
         <div class="col-md-7" id="page_info"></div>
         <div class="col-md-5">
@@ -139,32 +145,32 @@
 
 <script type="text/javascript">
     <%--        定义全局变量，给编辑和添加使用--%>
-    <%--     page_num当前页   page_size总页数  dept_name部门名称集合  url_emp提交和 --%>
+    <%--     page_num当前页   page_size总页数  dept_name部门名称集合  url_emp编辑和新增要提交的地址 --%>
+    let page_num, page_size, dept_name, url_emp, page_change;
     $(function () {
         goPage(1)
-    })
 
-    let page_num, page_size, dept_name, url_emp;
+    })
 
     function goPage(pn) {
         //goPage方法会回显下拉框，所以要先清空一次，要不然会出现很多个下拉框
         $("#dept_name").empty()
         $.ajax({
             url: "<%=basePath%>findAll.do",
-                type:"get",
-                data:"page="+pn,
-                success:function (empVo) {
+            type: "get",
+            data: "page=" + pn,
+            success: function (empVo) {
 
-                    //这里因为要解析不同的数据，所以最好要分不同的方法来解决
-                    //解析员工集合
-                    build_ems_tables(empVo);
-                    // 解析分页信息
-                    build_page_info(empVo);
-                    //解析分页导航信息
-                    build_page_nav(empVo);
-                    //解析部门信息
-                    build_dept_name(empVo);
-                }
+                //这里因为要解析不同的数据，所以最好要分不同的方法来解决
+                //解析员工集合
+                build_ems_tables(empVo);
+                // 解析分页信息
+                build_page_info(empVo);
+                //解析分页导航信息
+                build_page_nav(empVo);
+                //解析部门信息
+                build_dept_name(empVo);
+            }
         })
     }
 
@@ -172,7 +178,6 @@
     //解析员工集合
     function build_ems_tables(empVo) {
         const ems = empVo.pageInfo.list;
-        console.log(ems)
         $("#emp_table").empty();
         $.each(ems, function (index, emp) {
             //    创建td对象
@@ -191,8 +196,8 @@
             //为编辑按钮添加一个定义的属性，来表示当前员工的id
             editBtn.attr("edit-id", emp.id);
 
-            //删除按钮
-            const delBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
+            //删除按钮                          给删除按钮绑定点击事件
+            const delBtn = $("<button onclick = 'deleteOne(this)'></button>").addClass("btn btn-danger btn-sm delete_btn")
                 .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
 
             //为删除按钮添加一个定义的属性，来表示当前员工的id
@@ -270,18 +275,18 @@
         }
 
 
-        //给部门下拉框赋值的方法
-        function build_dept_name(empVo){
-            let $dept_name = $('#dept_name')
+    //给部门下拉框赋值的方法
+    function build_dept_name(empVo) {
+        //获取部门下拉框元素
+        let $dept_name = $('#dept_name')
 
-            //const {departs} = empVo;这一行作用等同于下面一行代码，是json对象的用法
-            let departs = empVo.departs;
-            console.log(empVo)
-            $.each(departs,function (index,item) {
-                $("<option></option>").val(item.departmentId)
-                    .html(item.departmentName).appendTo($dept_name)
-            })
-        }
+        //const {departs} = empVo;这一行作用等同于下面一行代码，是json对象的用法
+        let departs = empVo.departs;
+        $.each(departs, function (index, item) {
+            $("<option></option>").val(item.departmentId)
+                .html(item.departmentName).appendTo($dept_name)
+        })
+    }
 
 
         //点击添加按钮，清空模态框内容，
@@ -290,6 +295,8 @@
             restart()
             //  因为是添加，所以把ajax请求地址改为添加
             url_emp = "<%=basePath%>add.do"
+            //添加完成后跳到最后一页
+            page_change = page_size
             //隐藏id框，清空id值
             $('#edit_id_show').attr("style", "display: none").val()
             $('#myModal').modal('show')
@@ -302,16 +309,19 @@
 
 
     // 提交表单的方法，添加和编辑共用模态框
+    //    所以里面都是变量，没有写死的
     function add() {
         $.ajax({
             type: 'post',
+            //url根据编辑和添加改变
             url: url_emp,
             data: $('#addForm').serialize(),
-            success: function (data) {
+            success: function () {
                 $("#dept_name").empty()
-                goPage(page_size)
+                //完成之后去的页面根据添加和编辑改变
+                goPage(page_change)
                 $('#myModal').modal('hide')
-                alert(data)
+                alert("操作成功")
             }
         })
     }
@@ -330,6 +340,7 @@
     function edit(data) {
         const $edit_id = data.attr("edit-id");
         url_emp = "<%=basePath%>edit.do"
+        page_change = page_num
         //    显示id框
         $('#edit_id_show').attr("style", "")
         //更改表单提交地址
@@ -395,16 +406,15 @@
     $('#deletes').click(function () {
         //选中所有的已选复选框
         const tt = $("input[name = 'ids']:checked");
-        // console.log(tt)
 
         //大于0，说明有选中的，执行删除方法
         if (tt.size() > 0) {
             let msg = "";
-            $.each(tt, function (index, item) {
-                msg += $(this).parents("tr").find("td:eq(2)").text() + ","
+            $.each(tt, function () {
+                //获取名字
+                msg += $(this).parents("tr").find("td").eq(2).text() + ","
+                // 将要删除的id全部放入表单中，等下直接提交表单删除
                 $(this).appendTo($("#form"))
-                console.log($(this).parents("tr").find("td:eq(2)").text())
-
             })
             msg = msg.substr(0, msg.length - 1)
             if (confirm("确认删除" + msg + "?")) {
@@ -416,6 +426,7 @@
                         console.log("删除删除")
                         console.log(data)
                         $("#ids_all").prop("checked", false)
+                        //批量删除后情况表单
                         $("#form").empty()
                     }
                 })
@@ -427,6 +438,28 @@
         //返回当前页
         goPage(page_num)
     })
+
+    // 删除单个
+    function deleteOne(del_bt) {
+        if (confirm("确定删除吗？")) {
+            //获取id
+            console.log(this)
+            //   获取id信息
+            var emp_id = $(del_bt).attr("del-id")
+            //通过ajax发给后台
+            $.ajax({
+                url: "<%=basePath%>deleteOne.do",
+                type: "post",
+                data: {
+                    id: emp_id
+                },
+                success: function () {
+                    console.log("单个删除的方法")
+                    goPage(page_num)
+                }
+            })
+        }
+    }
 </script>
 </body>
 </html>
